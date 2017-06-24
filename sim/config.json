@@ -1,0 +1,12 @@
+{
+  "pyfrc": {
+    "CAN": {
+      "1": "Left Master",
+      "2": "Left Slave",
+      "3": "Right Master",
+      "4": "Right Slave",
+      "5": "Front",
+      "6": "Rear"
+    }
+  }
+}
