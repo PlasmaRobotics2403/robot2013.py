@@ -27,6 +27,8 @@ class Shooter(object):
 
         # Initialize State Attributes
         self.enabled = False
+        self.dpad_up_held = False
+        self.dpad_down_held = False
         self.speed_state = Values.SHOOTER_DEFAULT_SPEED_STATE
         self.piston_state = 0
 
@@ -39,17 +41,29 @@ class Shooter(object):
     def update(self, controller):
         """Updates Shooter States regarding wheel power and solenoid firing"""
 
-        self.enabled = controller.A.toggled
+        if controller.A.off_to_on:
+            self.enabled = not self.enabled
 
         if self.enabled:
-            if controller.DPAD.up:
+            if controller.R3.pressed and controller.DPAD.up and not self.dpad_up_held: # implement checking for space between presses
+                self.dpad_up_held = True
+                self.dpad_down_held = controller.DPAD.down
+
                 if not (self.speed_state == Values.SHOOTER_SPEED_INTERVALS - 1):
                     self.speed_state += 1
-            elif controlelr.DPAD.down:
+            elif controller.R3.pressed and controller.DPAD.down and not self.dpad_down_held:
+                self.dpad_down_held = True
+                self.dpad_up_held = controller.DPAD.up
+
                 if not self.speed_state == 0:
                     self.speed_state -= 1
+            else:
+                self.dpad_up_held = controller.DPAD.up
+                self.dpad_down_held = controller.DPAD.down
 
             self.talon_front.set(self.speed_range[self.speed_state])
+        else:
+            self.talon_front.set(0)
 
         if controller.RB.pressed:
             self.fire()
@@ -64,6 +78,7 @@ class Shooter(object):
     def disable(self):
         """Handles disabling of the shooter"""
         self.enabled = False
+        print('disable {}'.format(self.enabled))
 
     def fire(self):
         """Handles firing of the shooter solenoid"""

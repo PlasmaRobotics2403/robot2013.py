@@ -46,33 +46,8 @@ class FroboDrive(object):
             self.driver_station.reportError('[FroboDrive] ERROR: If joystick axis are not provided, both power_value and turn_value must be provided.')
             return
 
-        abs_power_value = abs(power_value)
-        abs_turn_value = abs(turn_value)
-        power_sign = 0 if power_value == 0 else int(power_value/abs_power_value)
-        turn_sign = 0 if turn_value == 0 else int(turn_value/abs_turn_value)
-
-        if turn_value == 0:
-            left_speed = power_value
-            right_speed = power_value
-        elif power_value == 0:
-            left_speed = -turn_value
-            right_speed = turn_value
-        elif power_sign == 1 and turn_sign == 1:
-            left_speed = 1 if (abs_power_value + abs_turn_value > 1) else abs_power_value + abs_turn_value
-            right_speed = 0 if (abs_power_value - abs_turn_value > 0) else abs_power_value - abs_turn_value
-        elif power_sign == 1 and turn_sign == -1:
-            left_speed = 0 if (abs_power_value - abs_turn_value > 0) else abs_power_value - abs_turn_value
-            right_speed = 1 if (abs_power_value + abs_turn_value > 1) else abs_power_value + abs_turn_value
-        elif power_sign == -1 and turn_sign == 1:
-            left_speed = 1 if (abs_power_value + abs_turn_value > 1) else -(abs_power_value + abs_turn_value)
-            right_speed = 0 if (abs_power_value - abs_turn_value > 0) else -(abs_power_value - abs_turn_value)
-        elif power_sign == -1 and turn_sign == -1:
-            left_speed = 0 if (abs_power_value - abs_turn_value > 0) else -(abs_power_value - abs_turn_value)
-            right_speed = 1 if (abs_power_value + abs_turn_value > 1) else -(abs_power_value + abs_turn_value)
-        else:
-            left_speed = 0
-            right_speed = 0
-            self.driver_station.reportWarning('[FroboDrive] WARNING: No FPS Case Triggered.')
+        left_speed = power_value + turn_value
+        right_speed = power_value - turn_value
 
         max_speed = abs(Values.DRIVE_MAX_SPEED) if abs(Values.DRIVE_MAX_SPEED) < 1 else 1
 

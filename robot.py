@@ -33,7 +33,7 @@ class Frobo(wpilib.IterativeRobot):
 
     def disabledInit(self):
         """Method ran when Frobo first enters the *disabled* mode."""
-        pass
+        self.shooter.disable()
 
     def disabledPeriodic(self):
         """Method that runs while Frobo is in the *disabled* mode."""
@@ -66,11 +66,11 @@ class Frobo(wpilib.IterativeRobot):
 
     def testInit(self):
         """Method ran when Frobo first enters the *test* mode."""
-        pass
+        self.shooter.disable()
 
     def testPeriodic(self):
         """Method that runs while Frobo is in the *test* mode."""
-        pass
+        self.shooter.update(self.controller)
 
 
 if __name__ == '__main__':
