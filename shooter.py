@@ -61,7 +61,7 @@ class Shooter(object):
                 self.dpad_up_held = controller.DPAD.up
                 self.dpad_down_held = controller.DPAD.down
 
-            self.talon_front.set(self.speed_range[self.speed_state])
+            self.talon_front.set(-1 * self.speed_range[self.speed_state])
         else:
             self.talon_front.set(0)
 
@@ -78,7 +78,6 @@ class Shooter(object):
     def disable(self):
         """Handles disabling of the shooter"""
         self.enabled = False
-        print('disable {}'.format(self.enabled))
 
     def fire(self):
         """Handles firing of the shooter solenoid"""

@@ -24,6 +24,7 @@ class Frobo(wpilib.IterativeRobot):
         self.drive = FroboDrive(self, Values.DRIVE_LEFT_MAIN_ID, Values.DRIVE_LEFT_SLAVE_ID, Values.DRIVE_RIGHT_MAIN_ID, Values.DRIVE_RIGHT_SLAVE_ID)
 
         # Initialize Shooter Sub-System
+        self.compressor = wpilib.Compressor()
         self.shooter = Shooter(self, Values.SHOOT_FRONT_ID, Values.SHOOT_BACK_ID, Values.SHOOT_SOLENOID_FORWARD_CHANNEL_ID, Values.SHOOT_SOLENOID_REVERSE_CHANNEL_ID)
 
     def robotPeriodic(self):
