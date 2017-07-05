@@ -22,10 +22,6 @@ class Shooter(object):
         self.talon_front.setInverted(True)
         self.talon_back.setInverted(True)
 
-        # Set Back Motor to Follower Mode
-        # self.talon_back.changeControlMode(ctre.CANTalon.ControlMode.Follower)
-        # self.talon_back.set(self.talon_front.getDeviceID())
-
         # Initialize Shooter Solenoid
         self.solenoid_shoot = wpilib.DoubleSolenoid(solenoid_forward_id, solenoid_reverse_id)
 
