@@ -26,6 +26,6 @@ class Values(object):
 
     # Shooter Configuration]
     SHOOTER_SPEED_INTERVALS = 5
-    SHOOTER_DEFAULT_SPEED_STATE = 2 # possible values [0,1,2,3,4]
+    SHOOTER_DEFAULT_SPEED_STATE = 2 # possible values [0,1,2,3,4] with default previous value of 5 speed intervals
     SHOOTER_MIN_SPEED = 0.35
     SHOOTER_MAX_SPEED = 0.95
