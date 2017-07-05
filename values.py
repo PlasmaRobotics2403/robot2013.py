@@ -21,8 +21,8 @@ class Values(object):
     SHOOT_SOLENOID_REVERSE_CHANNEL_ID = 1
 
     # Drive Train Configuration
-    DRIVE_MAX_SPEED = 1
-    DRIVE_MAX_TURN = 1
+    DRIVE_SPEED_MULTIPLIER = 1
+    DRIVE_TURN_MULTIPLIER = 0.9
 
     # Shooter Configuration]
     SHOOTER_SPEED_INTERVALS = 5

@@ -46,16 +46,14 @@ class FroboDrive(object):
             self.driver_station.reportError('[FroboDrive] ERROR: If joystick axis are not provided, both power_value and turn_value must be provided.')
             return
 
+        turn_multiplier = abs(Values.DRIVE_TURN_MULTIPLIER) if abs(Values.DRIVE_TURN_MULTIPLIER) < 1 else 1
+        turn_value = turn_value * turn_multiplier
+
+        speed_multiplier = abs(Values.DRIVE_SPEED_MULTIPLIER) if abs(Values.DRIVE_SPEED_MULTIPLIER) < 1 else 1
+        power_value = power_value * speed_multiplier
+
         left_speed = power_value + turn_value
         right_speed = power_value - turn_value
-
-        max_speed = abs(Values.DRIVE_MAX_SPEED) if abs(Values.DRIVE_MAX_SPEED) < 1 else 1
-
-        left_speed_sign = (left_speed/abs(left_speed)) if not left_speed == 0 else 1
-        left_speed = min(abs(left_speed), 1) * left_speed_sign * max_speed
-
-        right_speed_sign = (right_speed/abs(right_speed)) if not right_speed == 0 else 1
-        right_speed = min(abs(right_speed), 1) * right_speed_sign * max_speed
 
         self.talon_left_main.set(left_speed)
         self.talon_right_main.set(right_speed)

@@ -19,8 +19,8 @@ class Shooter(object):
         self.talon_back = ctre.CANTalon(talon_back_id)
 
         # Set Back Motor to Follower Mode
-        self.talon_back.changeControlMode(ctre.CANTalon.ControlMode.Follower)
-        self.talon_back.set(self.talon_front.getDeviceID())
+        # self.talon_back.changeControlMode(ctre.CANTalon.ControlMode.Follower)
+        # self.talon_back.set(self.talon_front.getDeviceID())
 
         # Initialize Shooter Solenoid
         self.solenoid_shoot = wpilib.DoubleSolenoid(solenoid_forward_id, solenoid_reverse_id)
@@ -62,8 +62,10 @@ class Shooter(object):
                 self.dpad_down_held = controller.DPAD.down
 
             self.talon_front.set(-1 * self.speed_range[self.speed_state])
+            self.talon_back.set(-1 * self.speed_range[self.speed_state])
         else:
             self.talon_front.set(0)
+            self.talon_back.set(0)
 
         if controller.RB.pressed:
             self.fire()
