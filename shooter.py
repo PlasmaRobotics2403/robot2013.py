@@ -18,6 +18,10 @@ class Shooter(object):
         self.talon_front = ctre.CANTalon(talon_front_id)
         self.talon_back = ctre.CANTalon(talon_back_id)
 
+        # Invert Shooter Motors since natively wrong direction
+        self.talon_front.setInverted(True)
+        self.talon_back.setInverted(True)
+
         # Set Back Motor to Follower Mode
         # self.talon_back.changeControlMode(ctre.CANTalon.ControlMode.Follower)
         # self.talon_back.set(self.talon_front.getDeviceID())
@@ -61,17 +65,20 @@ class Shooter(object):
                 self.dpad_up_held = controller.DPAD.up
                 self.dpad_down_held = controller.DPAD.down
 
-            self.talon_front.set(-1 * self.speed_range[self.speed_state])
-            self.talon_back.set(-1 * self.speed_range[self.speed_state])
+            self.set_motor_speeds(self.speed_range[self.speed_state])
         else:
-            self.talon_front.set(0)
-            self.talon_back.set(0)
+            self.set_motor_speeds(0)
 
         if controller.RB.pressed:
             self.fire()
 
         if not controller.RB.pressed:
             self.retract()
+
+    def set_motor_speeds(self, speed_value):
+        """Handles speed adjustment of both shooter CANTalons"""
+        self.talon_front.set(speed_value)
+        self.talon_back.set(speed_value)
 
     def enable(self):
         """Handles enabling of the shooter"""
